@@ -13,41 +13,38 @@ type Props = {
 
 // FlatList test
 const HomeScreen: React.FC<Props> = () => {
-    const [nasaTab, setNasa] = useState<Nasa[]>([]);
+
     //récupération de la date du pc
-    var date = new Date().getDate();
+    var day = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    var date="&date="+year+"-"+month+"-"+day;
 
     var paramsSearch: String="";
     //conversion de la date int en string 
-    paramsSearch = "&date=2020-10-02";
-    const API_ERIC = "https://nasa-apod-ynov.herokuapp.com/";
+    paramsSearch = date;
+    //console.log("parametre ====="+paramsSearch);
+    //const API_ERIC = "https://nasa-apod-ynov.herokuapp.com/";
     function _onPressButton() {
         alert('You tapped the button!')
       }
-console.log("Your value hasn't been found");
+      //const  [picture, setNasa]= useState<Nasa>();
+      //AXIOS
     useEffect(() => {
         axios.get(`https://api.nasa.gov/planetary/apod?api_key=0xy8D0M96HpF4Ek91fxRz9R3ksl0QlMmO5ExG3ww`+paramsSearch)
         //axios.get('https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata')
         .then((res) => {
-            //setNasa([]);
             // return an array
-            console.log("enter in axios");
             if (res.data == null || res.data == undefined) {
                 console.log("Your value hasn't been found");
                 // TODO: display an error message
             } else {
                 console.log(res.data);
+                //const media: Nasa =toNasa(res.data)
+                //setNasa(media);
 
-                // const myNasa = res.data.map((nasaJsonData: JSONNasa) => {
-                //     // use the utils function to retrieve the JSON data in a nasa model
-                //     const meal: Nasa = toNasa(nasaJsonData);
-                //     return meal;
-                // })
-                // set the state with the data nasa from the JSON Request
-                //setNasa(myNasa);
             }
 
-            //const getNasa: Nasa = res.data[0];
         })
         .catch((err) => {
             throw err;
